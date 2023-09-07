@@ -18,7 +18,7 @@ meta = MetaData(db)
 # use Table import to specify the name of our table &add the meta schema
 artist_table = Table(
     "Artist", meta,
-    # define columns 
+    # define columns
     Column("ArtistId", Integer, primary_key=True),
     Column("Name", String),
 )
@@ -53,14 +53,19 @@ with db.connect() as connection:
 
     # Query 1 - select all records from the artist table
     # define all six queries into a variable called 'select_query'
-    select_query = artist_table.select()
+    # select_query = artist_table.select()
+    # Query 2 - select only the name column from the artist table
+    # select_query = artist_table.select().with_only_columns([
+    # artist_table.c.Name])
+    # Query 3 - select only queen from the artist table
+    # select_query = artist_table.select().where(artist_table.c.Name == "Queen")
+    # Query 4 - select only be artistid number 51 from he artist table
+    # select_query = artist_table.select().where(artist_table.c.ArtistId == 51)
+    # Query 5 - select only the albums with artistid number 51 on album table
+    # select_query = album_table.select().where(album_table.c.ArtistId == 51)
+    # Query 6 - select all tracks where the composer is queen from track table
+    select_query = track_table.select().where(track_table.c.Composer == "Queen")
 
     results = connection.execute(select_query)
     for result in results:
         print(result)
-
-    # Query 2 - select only the name column from the artist table
-    # Query 3 - select only queen from the artist table
-    # Query 4 - select only be artistid number 51 from he artist table
-    # Query 5 - select only the albums with artistid number 51 on album table
-    # Query 6 - select all tracks where the composer is queen from track table
